@@ -13,11 +13,12 @@ function Footer() {
   const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
   );
+  var footerComponent;
 
-  // if ternario
-  return (
-    <footer className='footer'>
-      <Grid container py={4} alignItems={'center'}>
+    if (token == "") {
+        footerComponent =
+        <footer className='footer'>
+        <Grid container py={4} alignItems={'center'}>
         <Grid item xs={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
           <Typography variant='h6' align='center'>Blog da turma 63 - Feito por: Thiago Faccipieri - 2023</Typography>
           <Box display={'flex'}>
@@ -38,7 +39,13 @@ function Footer() {
           <Typography variant='h5'>Em parceria com: Generation Brasil</Typography>
         </Grid>
       </Grid>
-    </footer>
+      </footer>
+    }
+  // if ternario
+  return (
+    <>
+      {footerComponent}
+    </>
   )
 }
 
