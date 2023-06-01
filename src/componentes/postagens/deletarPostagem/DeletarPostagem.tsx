@@ -5,57 +5,67 @@ import { buscaId, deleteId } from '../../../service/service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 function DeletarPostagem() {
+  let navigate = useNavigate();
+  const { id } = useParams<{id: string}>();
+  const [postagem, setPostagem] = useState<Postagem>();
   const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
   );
 
-  const { id } = useParams<{ id: string }>();
-
-  const navigate = useNavigate()
-
-  const [post, setPost] = useState<Postagem>({
-    id: 0,
-    titulo: '',
-    texto: '',
-    data: '',
-    tema: null,
-  });
-
-  async function getById(id: string) {
-    await buscaId(`/postagens/${id}`, setPost, {
-      headers: {
-        Authorization: token,
-      },
+  useEffect(() => {
+    if (token == "") {
+      toast.error("Você precisa estar logado", {
+        position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
     });
-  }
-
-  useEffect(() => {
-    if(token === ''){ 
-      alert('Ta tirando né??? sem token não rola')
-      navigate('/login')
+        navigate("/login")
     }
-  }, [])
+}, [token])
 
-  useEffect(() => {
-    if (id !== undefined) {
-      getById(id);
+useEffect(() =>{
+    if(id !== undefined){
+        findById(id)
     }
-  }, []);
+}, [id])
 
-  function back(){
-    navigate('/postagens')
-  }
+async function findById(id: string) {
+    buscaId(`/postagens/${id}`, setPostagem, {
+        headers: {
+            "Authorization": token
+        }
+    })
+}
 
-  function apagarPostagem() {
+function sim() {
+  navigate('/postagens')
     deleteId(`/postagens/${id}`, {
       headers: {
-        Authorization: token
+        'Authorization': token
       }
-    })
-    alert('postagem apagada com sucesso')
-    back()
+    });
+    toast.success("Postagem deletada com sucesso", {
+      position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+  });
+  }
+
+  function nao() {
+    navigate('/postagens')
   }
 
   return (
@@ -74,15 +84,15 @@ function DeletarPostagem() {
             p={2}
           >
             <Typography>Postagem:</Typography>
-            <Typography>{post.titulo}</Typography>
-            <Typography>{post.texto}</Typography>
-            <Typography>Tema: {post.tema?.descricao}</Typography>
+            <Typography>{postagem?.titulo}</Typography>
+            <Typography>{postagem?.texto}</Typography>
+            <Typography>Tema: {postagem?.tema?.descricao}</Typography>
 
             <Box display={'flex'} gap={4}>
-              <Button fullWidth variant="contained" color="primary" onClick={back}>
+              <Button fullWidth variant="contained" color="primary" onClick={nao}>
                 cancelar
               </Button>
-              <Button fullWidth variant="contained" color="secondary" onClick={apagarPostagem}>
+              <Button fullWidth variant="contained" color="secondary" onClick={sim}>
                 apagar
               </Button>
             </Box>
