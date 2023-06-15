@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+.content{
+    text-align: center!important;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.video{
+    border-radius: 30px;
+    margin-bottom: 60px;
+}
+
+.titulo{
+    font-size: 26px!important;
+    font-weight: 600!important;
+    margin-bottom: 30px!important;
+}
+
+.postagens{
+    
+}

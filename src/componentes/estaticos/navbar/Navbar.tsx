@@ -1,10 +1,12 @@
-import { AppBar, Toolbar, Box, Typography, Grid } from '@mui/material';
+import { AppBar, Toolbar, Box, Typography, Grid, Button } from '@mui/material';
 import './Navbar.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
-import { addToken } from '../../../store/tokens/action';
-import { toast } from 'react-toastify';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'; 
+import { useDispatch, useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { addToken } from "../../../store/tokens/action";
+import ShoppingCartSharpIcon from '@mui/icons-material/ShoppingCartSharp';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+
 
 function Navbar() {
   const token = useSelector<TokenState, TokenState["tokens"]>(
@@ -14,142 +16,115 @@ function Navbar() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
+
+  const location = useLocation();
+const currentUrl = location.pathname;
+
   function logout() {
-    toast.info('Usuario deslogado!', {
-      position:"top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover:false,
-      draggable: false,
-      theme: "colored",
-      progress: undefined,
-    });
+    alert('Usuário deslogado com sucesso');
     dispatch(addToken(''))
     navigate('/login');
   }
 
   let navbarComponent;
 
-  if(token !== '') {
-    navbarComponent = (
-<AppBar position="static" className="navbar">
+    if (token === '' && currentUrl === '/'){
+      navbarComponent = (
+        <AppBar position="static" className="navbar">
         <Toolbar variant="dense">
-          <Grid container justifyContent={'space-between'} className='fonte'>
+          <Grid container justifyContent={'space-between'} className='fonte' direction={"row"}>
             <Box style={{ cursor: 'pointer' }}>
-              <Typography variant="h5" color="inherit" className='fonte'>
-                BlogPessoal
+              <Typography variant="h5" color="" className='fonte'>
+                <img src="https://i.imgur.com/RWFhDaM.png" alt="" className='imagem' />
               </Typography>
             </Box>
-
-            <Box display="flex" justifyContent="start">
-              <Link to="/home">
+            <Box display="flex" justifyContent="right" alignItems={"center"}>
+              <Link to="/" style={{ textDecoration: 'none' }}>
                 <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    home
+                  <Typography variant="h6" className='linha' color="black">
+                    Pagina Inicial
                   </Typography>
                 </Box>
               </Link>
-              <Link to="/postagens">
+              <Link to="/sobre" style={{ textDecoration: 'none' }}>
                 <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    postagens
+                  <Typography variant="h6" className='linha' color="black">
+                    TerraVerde.com
                   </Typography>
                 </Box>
               </Link>
-              <Link to="/temas">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    temas
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/formularioTema">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    cadastrar tema
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/perfil">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    perfil
-                  </Typography>
-                </Box>
-              </Link>
-              <Box mx={1} style={{ cursor: 'pointer' }} onClick={logout}>
-                <Typography variant="h6" color="inherit">
-                  logout
-                </Typography>
-              </Box>
             </Box>
+            <Grid direction={"row"} display={"flex"}>
+              <Box mx={1} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                <Link to="/login">
+                  <Button className='botao'  variant="contained" style={{ marginLeft: 'auto' }}>
+                    Login
+                  </Button>
+                </Link>
+              </Box>
+              <Box mx={1} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+              <Link to="/cadastro">
+                <Button className='botao'  variant="contained" style={{ marginLeft: 'auto' }}>
+                  Cadastrar
+                </Button>
+              </Link>
+              </Box>
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
+      )
+  } else if (currentUrl =='/login' || currentUrl == '/cadastro') {
+    navbarComponent = (null)
+  } else {
+    navbarComponent = ( 
+      <AppBar position="static" className="navbar">
+      <Toolbar variant="dense">
+        <Grid container justifyContent={'space-between'} className='fonte' direction={"row"}>
+          <Box style={{ cursor: 'pointer' }}>
+            <Typography variant="h5" color="" className='fonte'>
+              <img src="https://i.imgur.com/RWFhDaM.png" alt="" className='imagem' />
+            </Typography>
+          </Box>
+          <Box display="flex" justifyContent="center" alignItems={"center"}>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
+                <Typography variant="h6" className='linha' color="black">
+                  Pagina Inicial
+                </Typography>
+              </Box>
+            </Link>
+            <Link to="/sobre" style={{ textDecoration: 'none' }}>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
+                <Typography variant="h6" className='linha' color="black">
+                  TerraVerde.com
+                </Typography>
+              </Box>
+            </Link>
+          </Box>
+          <Grid direction={"row"} display={"flex"}>
+            <Box mx={1} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+              <Link to="/login">
+                <Button className='botao' color="secondary" variant="contained" style={{ marginLeft: 'auto' }}>
+                  Area do Redator
+                </Button>
+              </Link>
+            </Box>
+            <Box mx={1} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+              <Button onClick={logout} className='botao' color="secondary" variant="contained" style={{ marginLeft: 'auto' }}>
+                Sair
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
     )
   }
 
   return (
     <>
-      {/* {navbarComponent} */}
-      <AppBar position="static" className="navbar">
-        <Toolbar variant="dense">
-          <Grid container justifyContent={'space-between'} className='fonte'>
-            <Box style={{ cursor: 'pointer' }}>
-              <Typography variant="h5" color="inherit" className='fonte'>
-                BlogPessoal
-              </Typography>
-            </Box>
-
-            <Box display="flex" justifyContent="start">
-              <Link to="/home">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit" className='cursor'>
-                    home
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/postagens">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit" className='cursor'>
-                    postagens
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/temas">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    temas
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/formularioTema">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    cadastrar tema
-                  </Typography>
-                </Box>
-              </Link>
-              <Link to="/perfil">
-                <Box mx={1} style={{ cursor: 'pointer' }}>
-                  <Typography variant="h6" color="inherit">
-                    perfil
-                  </Typography>
-                </Box>
-              </Link>
-            </Box>
-
-            <Box>
-            <Box mx={1} style={{ cursor: 'pointer' }} onClick={logout}>
-                <Typography variant="h6" color="inherit">
-                  logout
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        </Toolbar>
-      </AppBar>
+      {navbarComponent}
     </>
   );
 }

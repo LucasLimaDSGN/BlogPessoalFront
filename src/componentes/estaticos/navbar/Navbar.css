@@ -1,3 +1,13 @@
 .navbar {
-  background-color: #3e5997 !important;
+  background-color: #ffffff !important;
+}
+
+.botao{
+  background-color: #ffffff!important;
+  color: black!important;
+}
+
+.botao:hover{
+  background-color: #527146!important;
+  color: #ffffff!important;
 }

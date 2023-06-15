@@ -16,6 +16,7 @@ import store from './store/store'
 import Perfil from './paginas/perfil/Perfil'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import LandingPage from './paginas/landingPage/LandingPage'
 
 function App() {
 
@@ -26,7 +27,7 @@ function App() {
         <Navbar />
         <div style={{minHeight: '85vh'}}>
           <Routes>
-            <Route path='/' element={<Login />} />
+            <Route path='/' element={<LandingPage />} />
             <Route path='/login' element={<Login />} />
             <Route path='/home' element={<Home />} />
             <Route path='/cadastro' element={<CadastroUsuario />} />

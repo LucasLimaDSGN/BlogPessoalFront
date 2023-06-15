@@ -1,52 +1,83 @@
-import { Box, Grid, Typography } from '@mui/material'
-import React from 'react'
-import './Footer.css'
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
-
+import React from "react";
+import { Typography, Grid } from '@material-ui/core';
+import { Box } from '@mui/material';
+import { useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { useLocation } from "react-router-dom";
 
 function Footer() {
-  const token = useSelector<TokenState, TokenState["tokens"]>(
-    (state) => state.tokens
-  );
-  var footerComponent;
+    
+    const location = useLocation();
+const currentUrl = location.pathname;
 
-    if (token == "") {
-        footerComponent =
-        <footer className='footer'>
-        <Grid container py={4} alignItems={'center'}>
-        <Grid item xs={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-          <Typography variant='h6' align='center'>Blog da turma 63 - Feito por: Thiago Faccipieri - 2023</Typography>
-          <Box display={'flex'}>
-            <Typography>Feito com:</Typography>
-            <KeyboardArrowLeftIcon />
-            <Typography color={'lightgrey'} >React / MUI</Typography>
-            <KeyboardArrowRightIcon />
-          </Box>
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
+
+    var footerComponent;
+
+    if (token == "" && currentUrl == '/') {
+        footerComponent = <Grid container direction="row" justifyContent="center" alignItems="center">
+        <Grid alignItems="center" item xs={12}>
+            <Box style={{ backgroundColor: "#595b5a", height: "200px" }}>
+            <Box display="flex" alignItems="center" justifyContent="center">
+            <img src="https://i.imgur.com/x9HTU0N.png"style={{ fontSize: 60, width:"100px"}} />
+                </Box>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                    <Typography  align="center" gutterBottom style={{ color: "white", fontSize:"14px"}}>Fornecendo alimentação saudável <br/>
+e de qualidade a preços acessíveis</Typography>
+
+                </Box>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                    <a href="https://linktr.ee/Terra_Verde" target="_blank">
+                        <img src="https://i.imgur.com/tATQQis.png" style={{ fontSize: 60, color: "white", width:"40px",padding:3 }} />
+                    </a>
+                    <a href="https://www.instagram.com/terraverdepi/" target="_blank">
+                        <img src="https://i.imgur.com/PO8txgt.png" style={{ fontSize: 60, color: "white", width:"40px",padding:3}} />
+                    </a>
+                    <a href="https://linktr.ee/TerraVerdee" target="_blank">
+                        <img src="https://i.imgur.com/YNyoOOx.png"style={{ fontSize: 60, color: "white", width:"40px",padding:3 }} />
+                    </a>
+                    <a href="https://www.behance.net/gallery/171803185/Intregative-Project-TerraVerdecom" target="_blank">
+                        <img src="https://i.imgur.com/ux6BHZE.png"style={{ fontSize: 60, color: "white", width:"47px",padding:3 }} />
+                    </a>
+                </Box>
+            </Box>
+            <Box style={{ backgroundColor: "#4c4d4c", height: "60px" }}>
+                <Box paddingTop={1}>
+                    <Typography variant="subtitle2" align="center" gutterBottom style={{ color: "white" }} >® MARCA REGISTRADA</Typography>
+                </Box>
+                <Box>
+                    <a target="_blank" style={{textDecoration: "none"}} href="https://brasil.generation.org">
+                        <Typography variant="subtitle2" gutterBottom style={{ color: "white" }} align="center">Todos os direitos reservados</Typography>
+                    </a>
+                </Box>
+            </Box>
         </Grid>
-        <Grid item xs={4} display={'flex'} justifyContent={'center'}>
-          {/* controlando o que aparece em tela ou não, de acordo com o token da pessoa, com um if ternário */}
-          {token !== '' ? <Box display={'flex'} gap={2} alignItems={'center'} className='iconesFooter'>
-            <GitHubIcon fontSize='inherit' className='iconeInd' />
-            <LinkedInIcon fontSize='inherit' className='iconeInd' />
-          </Box> : <>você não está logado ainda</>}
-        </Grid>
-        <Grid item xs={4} display={'flex'} justifyContent={'center'}>
-          <Typography variant='h5'>Em parceria com: Generation Brasil</Typography>
-        </Grid>
-      </Grid>
-      </footer>
+    </Grid>
+    }else if(currentUrl =='/login' || currentUrl == '/cadastro') {
+        footerComponent = (null)
+    }else{
+        footerComponent = <Grid container direction="row"  alignItems="flex-start">
+        <Grid alignItems="flex-start" item xs={12}>
+        <Box style={{ backgroundColor: "#595b5a", height: "52px" }}>
+        <Box display="flex" alignItems="flex-start" marginLeft={2}>
+            <img src="https://i.imgur.com/x9HTU0N.png"style={{ fontSize: 60, width:"50px", marginLeft:2, marginRight:15}} />
+        
+                    <Typography align="center" style={{ color: "white", fontSize:"16px", alignSelf:"center"}} >® MARCA REGISTRADA. Todos os direitos reservados</Typography>
+                    </Box>
+                    </Box>
+                    
+            </Grid>
+            </Grid> 
     }
-  // if ternario
-  return (
-    <>
-      {footerComponent}
-    </>
-  )
-}
 
-export default Footer
+    
+    return (
+        <>
+            {footerComponent}
+        </>
+    )
+};
+
+export default Footer;
