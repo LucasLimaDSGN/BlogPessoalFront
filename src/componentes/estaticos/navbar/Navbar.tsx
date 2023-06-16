@@ -38,7 +38,7 @@ const currentUrl = location.pathname;
                 <img src="https://i.imgur.com/RWFhDaM.png" alt="" className='imagem' />
               </Typography>
             </Box>
-            <Box display="flex" justifyContent="right" alignItems={"center"}>
+            <Box display="flex" justifyContent="right" alignItems={"center"} style={{marginLeft:'80px'}}>
               <Link to="/" style={{ textDecoration: 'none' }}>
                 <Box mx={1} style={{ cursor: 'pointer' }}>
                   <Typography variant="h6" className='linha' color="black">
@@ -46,7 +46,7 @@ const currentUrl = location.pathname;
                   </Typography>
                 </Box>
               </Link>
-              <Link to="/sobre" style={{ textDecoration: 'none' }}>
+              <Link to="https://front-end-projeto-integrador.vercel.app" style={{ textDecoration: 'none' }}>
                 <Box mx={1} style={{ cursor: 'pointer' }}>
                   <Typography variant="h6" className='linha' color="black">
                     TerraVerde.com
@@ -86,7 +86,7 @@ const currentUrl = location.pathname;
               <img src="https://i.imgur.com/RWFhDaM.png" alt="" className='imagem' />
             </Typography>
           </Box>
-          <Box display="flex" justifyContent="center" alignItems={"center"}>
+          <Box display="flex" justifyContent="center" alignItems={"center"} style={{marginLeft:'80px'}}>
             <Link to="/" style={{ textDecoration: 'none' }}>
               <Box mx={1} style={{ cursor: 'pointer' }}>
                 <Typography variant="h6" className='linha' color="black">
