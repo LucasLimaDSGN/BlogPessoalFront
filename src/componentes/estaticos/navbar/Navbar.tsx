@@ -94,7 +94,7 @@ const currentUrl = location.pathname;
                 </Typography>
               </Box>
             </Link>
-            <Link to="/sobre" style={{ textDecoration: 'none' }}>
+            <Link to="https://front-end-projeto-integrador.vercel.app" style={{ textDecoration: 'none' }}>
               <Box mx={1} style={{ cursor: 'pointer' }}>
                 <Typography variant="h6" className='linha' color="black">
                   TerraVerde.com
